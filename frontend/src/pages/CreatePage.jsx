@@ -12,7 +12,17 @@ const CreatePage = () => {
     const {createProduct} = useProductStore()
     const handleAddProduct = async()=>{
         const {sucess,message} = await createProduct(newProduct);
-        if(sucess){
+        let newsuccess = sucess
+        if (message === "provide all fields") {
+            newsuccess = false
+        }
+        else if (message === "Product created successfully") {
+            newsuccess = true
+        }
+        else {
+            newsuccess = false
+        }
+        if(newsuccess){
             toast({
                 title: 'Success',
                 description: message,
@@ -29,6 +39,7 @@ const CreatePage = () => {
                 isClosable: true
             })
         }
+        setNewProduct({name:'',price:'',image:''})
     }
     return (
         <Container maxW={"container.sm"}>
